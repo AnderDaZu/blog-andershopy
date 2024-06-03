@@ -20,27 +20,28 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased">
-        <x-banner />
+    {{-- x-data -> indica que se trabajará con alpine.js --}}
+    <body class="font-sans antialiased sm:overflow-auto" 
+    :class="{
+        'overflow-hidden': open
+    }"
+    x-data="{
+        open: false,
+    }">
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+        @include('layouts.includes.admin.nav')
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
-            <!-- Page Content -->
-            <main>
+        @include('layouts.includes.admin.aside')
+        
+        <div class="p-4 sm:ml-64">
+            <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
                 {{ $slot }}
-            </main>
+            </div>
         </div>
 
+        <div x-on:click="open = false" x-show="open" 
+        style="display: none" drawer-backdrop="" class="bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30 sm:hidden"></div>
+  
         @stack('modals')
 
         @livewireScripts

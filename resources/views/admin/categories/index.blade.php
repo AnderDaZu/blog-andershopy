@@ -1,7 +1,17 @@
 <x-admin-layout>
+
+    <div class="flex justify-end mb-2">
+        {{-- <a href="{{ route('admin.categories.create') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            Agregar Categoría
+        </a> --}}
+        <x-cstm_button_create href="{{ route('admin.categories.create') }}">
+            Agregar Categoría
+        </x-cstm_button_create>
+    </div>
+
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-300">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-300">
                 <tr>
                     <th scope="col" class="px-6 py-3">
                         ID
@@ -9,7 +19,7 @@
                     <th scope="col" class="px-6 py-3">
                         Nombre
                     </th>
-                    <th scope="col" colspan="3" class="px-6 py-3">
+                    <th scope="col" colspan="2" class="px-6 pl-2 pr-6">
                         Acciones
                     </th>
                 </tr>
@@ -20,17 +30,17 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $category->id }}
                         </th>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 text-gray-600 dark:text-gray-300">
                             {{ $category->name }}
                         </td>
 
-                        <td class="px-2 py-4" width="15">
-                            <a href="{{ route('admin.categories.show', $category) }}" class="font-medium text-gray-600 dark:text-gray-500"><i class="fa-regular fa-eye"></i></a>
-                        </td>
-                        <td class="px-2 py-4" width="15">
+                        {{-- <td class="px-2 py-4" width="15">
+                            <a href="{{ route('admin.categories.show', $category) }}" class="font-medium text-gray-600 dark:text-gray-300"><i class="fa-regular fa-eye"></i></a>
+                        </td> --}}
+                        <td class="px-2 py-4 text-center" width="15">
                             <a href="{{ route('admin.categories.edit', $category) }}" class="font-medium text-blue-600 dark:text-blue-500"><i class="fa-solid fa-pen-to-square"></i></a>
                         </td>
-                        <td class="pl-2 pr-6 py-4" width="15">
+                        <td class="pl-2 pr-6 py-4 text-center" width="15">
                             <form action="{{ route('admin.categories.destroy', $category) }}" method="POST">
                                 @csrf
                                 @method('DELETE')

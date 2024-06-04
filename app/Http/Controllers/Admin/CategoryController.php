@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::paginate();
+        $categories = Category::latest('id')->paginate();
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -22,15 +22,21 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255',
         ]);
-        $category = Category::create($request->all());
-        return redirect()->route('admin.categories.show', $category->id)->with('info', 'Categoría creada con éxito');
-    }
 
-    public function show(Category $category)
-    {
-        return view('admin.categories.show', compact('category'));
+        $category = Category::create($request->all());
+
+        session()->flash('swal', [
+            'position' => "top-end",
+            'icon' => "success",
+            'title' => "¡Categoría ha sido creada!",
+            'showConfirmButton' => false,
+            'padding' => '1em',
+            'timer' => 1500
+        ]);
+
+        return redirect()->route('admin.categories.index');
     }
 
     public function edit(Category $category)
@@ -46,7 +52,7 @@ class CategoryController extends Controller
         
         $category->update($request->all());
 
-        return redirect()->route('admin.categories.show', $category->id)->with('info', 'Categoría actualizada con éxito');
+        return redirect()->route('admin.categories.index')->with('info', 'Categoría actualizada con éxito');
     }
 
     public function destroy(Category $category)

@@ -50,12 +50,11 @@
         @livewireScripts
 
         {{-- Para mostrar alertas --}}
-        {{--  
-            @if (session('swal'))
-                <script>
-                    Swal.fire(@json(session('swal')));
-                </script>
-            @endif
-        --}}
+        @if (session('swal'))
+            <script>
+                Swal.fire(@json(session('swal')));
+            </script>
+        @endif
+    
     </body>
 </html>

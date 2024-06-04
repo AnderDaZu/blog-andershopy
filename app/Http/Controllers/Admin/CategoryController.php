@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::latest('id')->paginate();
+        $categories = Category::latest('id')->paginate(7);
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -48,6 +48,15 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
+        ]);
+
+        session()->flash('swal', [
+            'position' => "top-end",
+            'icon' => "success",
+            'title' => "¡Categoría ha sido actualizada!",
+            'showConfirmButton' => false,
+            'padding' => '1em',
+            'timer' => 1500
         ]);
         
         $category->update($request->all());

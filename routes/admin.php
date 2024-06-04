@@ -16,4 +16,4 @@ Route::get('/', function () {
 })->name('dashboard');
 
 // si donde registramos este archivo de rutas agregamos el name('admin.'), ya no es necesario agregar acá ->names('categories')
-Route::resource('/categories', CategoryController::class);
+Route::resource('/categories', CategoryController::class)->except('show');

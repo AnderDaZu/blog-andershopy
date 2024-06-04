@@ -16,8 +16,20 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
+        $is_published = fake()->randomElement([true, false]);
+        $published_at = $is_published ? now() : null;
+
         return [
-            //
+            'title' => fake()->sentence(),
+            'slug' => fake()->slug(),
+            'excerpt' => fake()->text(150),
+            'body' => fake()->text(1000),
+            'image_path' => fake()->imageUrl(640, 480),
+            'is_published' => $is_published,
+            'category_id' => fake()->numberBetween(1, 5),
+            'user_id' => fake()->numberBetween(1, 20),
+            'published_at' => $published_at,
+
         ];
     }
 }

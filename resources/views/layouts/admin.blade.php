@@ -22,6 +22,8 @@
 
         <!-- Styles -->
         @livewireStyles
+
+        @stack('styles')
     </head>
     {{-- x-data -> indica que se trabajará con alpine.js --}}
     <body class="font-sans antialiased sm:overflow-auto" 
@@ -56,5 +58,6 @@
             </script>
         @endif
     
+        @stack('js')
     </body>
 </html>

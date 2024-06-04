@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -61,12 +62,40 @@ class CategoryController extends Controller
         
         $category->update($request->all());
 
-        return redirect()->route('admin.categories.index')->with('info', 'Categoría actualizada con éxito');
+        return redirect()->route('admin.categories.index');
     }
 
     public function destroy(Category $category)
     {
+        // si la categoría tiene posts asociados no se puede eliminar
+        // $posts = Post::where('category_id', $category->id)->exists();
+        // if ( $posts ) {
+        if ( $category->posts->count() > 0 ) {
+            session()->flash('swal', [
+                'position' => "top-end",
+                'icon' => "error",
+                'title' => "¡No se puede eliminar la categoría \"$category->name\" porque tiene posts asociados!",
+                'showConfirmButton' => false,
+                'padding' => '1em',
+                'timer' => 4000
+            ]);
+
+            return redirect()->route('admin.categories.index');
+        }
+
+        $name = $category->name;
+
         $category->delete();
-        return redirect()->route('admin.categories.index')->with('info', 'Categoría eliminada con éxito');
+
+        session()->flash('swal', [
+            'position' => "top-end",
+            'icon' => "success",
+            'title' => "¡Categoría \"$name\" ha sido eliminada!",
+            'showConfirmButton' => false,
+            'padding' => '1em',
+            'timer' => 2000
+        ]);
+
+        return redirect()->route('admin.categories.index');
     }
 }

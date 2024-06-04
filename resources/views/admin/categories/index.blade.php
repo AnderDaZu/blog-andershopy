@@ -41,10 +41,10 @@
                             <a href="{{ route('admin.categories.edit', $category) }}" class="font-medium text-blue-600 dark:text-blue-500"><i class="fa-solid fa-pen-to-square"></i></a>
                         </td>
                         <td class="pl-2 pr-6 py-4 text-center" width="15">
-                            <form action="{{ route('admin.categories.destroy', $category) }}" method="POST">
+                            <form action="{{ route('admin.categories.destroy', $category) }}" method="POST" id="formDelete-{{ $category->id }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="font-medium text-red-600 dark:text-red-500"><i class="fa-solid fa-trash"></i></button>
+                                <button type="submit" onclick="event.preventDefault(); deleteCategory({{ $category }})" class="font-medium text-red-600 dark:text-red-500"><i class="fa-solid fa-trash"></i></button>
                             </form>
                         </td>
                     </tr>
@@ -56,5 +56,27 @@
     <div class="mt-2">
         {{ $categories->links() }}
     </div>
+
+    @push('js')
+        <script>
+            function deleteCategory(category){
+                // console.log(`Hizo clic...`, category.name);
+                Swal.fire({
+                        title: '¿Deseas borrar esta categoría? ' + category.name,
+                        text: "No podras revertir esto!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Si, borrar',
+                        cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('formDelete-' + category.id).submit();
+                    }    
+                })
+            }
+        </script>
+    @endpush
 
 </x-admin-layout>

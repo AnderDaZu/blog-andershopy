@@ -13,8 +13,36 @@
         </div>
 
         <div class="flex justify-end">
-            <x-button>Actualizar categoría</x-button>
+            <x-danger-button onclick="deleteCategory()">Eliminar categoría</x-danger-button>
+            <x-button class="ml-2">Actualizar categoría</x-button>
         </div>
     </form>
+
+    <form action="{{ route('admin.categories.destroy', $category) }}" method="post" id="formDelete">
+        @csrf
+        @method('DELETE')
+        <input type="hidden" name="id" value="{{ $category->id }}">
+    </form>
+
+    @push('js')
+        <script>
+            function deleteCategory(){
+                Swal.fire({
+                    title: '¿Deseas borrar esta categoría?',
+                    text: "No podras revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, borrar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('formDelete').submit();
+                    }    
+                })
+            }
+        </script>
+    @endpush
 
 </x-admin-layout>

@@ -5,11 +5,11 @@
             'url' => route('dashboard'),
             'active' => request()->routeIs('dashboard')
         ],
-        // [
-        //     'name' => 'Posts',
-        //     'url' => route('posts.index'),
-        //     'active' => request()->routeIs('posts.*')
-        // ]
+        [
+            'name' => 'Admin',
+            'url' => route('admin.dashboard'),
+            'active' => request()->routeIs('admin.dashboard')
+        ]
     ]
 @endphp
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">

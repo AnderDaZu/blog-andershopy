@@ -12,4 +12,9 @@ class Tag extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function posts() // relación muchos a muchos polimorfica
+    {
+        return $this->morphedByMany(Post::class, 'taggable');
+    }
 }

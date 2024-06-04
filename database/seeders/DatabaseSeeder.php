@@ -17,13 +17,15 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(20)->create();
 
+        User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@test.com',
+            'password' => bcrypt('12345678'),
+        ]);
+
         Category::factory(5)->create();
 
         Post::factory(50)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

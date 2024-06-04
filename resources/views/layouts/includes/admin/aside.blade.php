@@ -6,6 +6,12 @@
             'active' => request()->routeIs('admin.dashboard'),
             'icon' => 'fa-solid fa-gauge-high'
         ],
+        [
+            'name' => 'Categorias',
+            'url' => route('admin.categories.index'),
+            'active' => request()->routeIs('admin.categories.*'),
+            'icon' => 'fa-solid fa-layer-group'
+        ],
     ]
 @endphp
 <aside id="logo-sidebar" 

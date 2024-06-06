@@ -12,6 +12,12 @@
             'active' => request()->routeIs('admin.categories.*'),
             'icon' => 'fa-solid fa-layer-group'
         ],
+        [
+            'name' => 'Posts',
+            'url' => route('admin.posts.index'),
+            'active' => request()->routeIs('admin.posts.*'),
+            'icon' => 'fa-solid fa-signs-post'
+        ],
     ]
 @endphp
 <aside id="logo-sidebar" 

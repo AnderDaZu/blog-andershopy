@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PostController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,3 +18,5 @@ Route::get('/', function () {
 
 // si donde registramos este archivo de rutas agregamos el name('admin.'), ya no es necesario agregar acá ->names('categories')
 Route::resource('/categories', CategoryController::class)->except('show');
+
+Route::resource('/posts', PostController::class)->except('show');

@@ -24,7 +24,7 @@ class PostFactory extends Factory
             'slug' => fake()->slug(),
             'excerpt' => fake()->text(150),
             'body' => fake()->text(1000),
-            'image_path' => fake()->imageUrl(640, 480),
+            'image_path' => fake()->imageUrl(640, 480, 'animals', true),
             'is_published' => $is_published,
             'category_id' => fake()->numberBetween(1, 5),
             'user_id' => fake()->numberBetween(1, 20),

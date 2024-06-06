@@ -31,12 +31,7 @@ class PostController extends Controller
 
         $user_id = auth()->id();
 
-        $post = Post::create([
-            'user_id' => $user_id,
-            'title' => $request->title,
-            'slug' => $request->slug,
-            'category_id' => $request->category_id,
-        ]);
+        $post = Post::create( $request->all() );
 
         session()->flash('swal', [
             'position' => "top-end",

@@ -33,7 +33,7 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="px-6 py-4">
                             <a href="{{ route('admin.posts.edit', $post) }}">
-                                <img src="{{ $post->image_path }}" alt="{{ $post->title }}" class="aspect-[16/9] object-cover object-center rounded h-32 max-w-44">
+                                <img src="{{ $post->image_path ? $post->image_path : 'https://camarasal.com/wp-content/uploads/2020/08/default-image-5-1.jpg' }}" alt="{{ $post->title }}" class="aspect-[16/9] object-cover object-center rounded h-32 max-w-44">
                             </a>
                         </td>
                         <th class="px-6 py-4 font-medium text-gray-900 dark:text-white text-sm sm:text-lg">

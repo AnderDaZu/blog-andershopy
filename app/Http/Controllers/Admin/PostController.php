@@ -60,6 +60,7 @@ class PostController extends Controller
             'category_id' => 'required|exists:categories,id',
             'excerpt' => 'nullable',
             'body' => 'nullable',
+            'is_published' => 'required|boolean'
         ]);
 
         $post->update( $request->all() );

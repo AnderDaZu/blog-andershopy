@@ -29,6 +29,6 @@ class PostObserver
     // para cuando se esta actualizando un post
     public function updating( Post $post )
     {
-        //
+        if( $post->is_published && !$post->published_at ) $post->published_at = now();
     }
 }

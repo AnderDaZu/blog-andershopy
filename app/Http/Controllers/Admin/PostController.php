@@ -29,8 +29,6 @@ class PostController extends Controller
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        $user_id = auth()->id();
-
         $post = Post::create( $request->all() );
 
         session()->flash('swal', [
@@ -79,6 +77,19 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        //
+        $title = $post->title;
+
+        $post->delete();
+
+        session()->flash('swal', [
+            'position' => "top-end",
+            'icon' => "success",
+            'title' => "¡Artículo \"$title\" ha sido eliminado!",
+            'showConfirmButton' => false,
+            'padding' => '1em',
+            'timer' => 3000
+        ]);
+
+        return redirect()->route('admin.posts.index');
     }
 }

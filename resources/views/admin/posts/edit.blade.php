@@ -87,8 +87,35 @@
         </div>
 
         <div class="flex sm:justify-end mt-4">
-            <x-button>Actualizar Artículo</x-button>
+            <x-danger-button onclick="deletePost()">Eliminar artículo</x-danger-button>
+            <x-button class="ml-2">Actualizar Artículo</x-button>
         </div>
     </form>
+
+    <form action="{{ route('admin.posts.destroy', $post) }}" method="post" id="formDelete">
+        @csrf
+        @method('DELETE')
+    </form>
+
+    @push('js')
+        <script>
+            function deletePost(){
+                Swal.fire({
+                    title: '¿Deseas borrar este artículo?',
+                    text: "No podras revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, borrar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('formDelete').submit();
+                    }    
+                })
+            }
+        </script>
+    @endpush
 
 </x-admin-layout>

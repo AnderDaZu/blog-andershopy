@@ -58,8 +58,8 @@ class PostController extends Controller
             'title' => 'required|string|max:255',
             // 'slug' => 'required|unique:posts,slug,' . $post->id,
             'category_id' => 'required|exists:categories,id',
-            'excerpt' => 'nullable',
-            'body' => 'nullable',
+            'excerpt' => $request['is_published'] ? 'required' : 'nullable',
+            'body' => $request['is_published'] ? 'required' : 'nullable',
             'is_published' => 'required|boolean'
         ]);
 

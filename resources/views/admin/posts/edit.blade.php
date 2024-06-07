@@ -73,7 +73,7 @@
             <x-input-error for="body" class="-mt-2" />
         </div>
 
-        <div class="mb-6 flex justify-end">
+        <div class="mt-4 mb-6 flex justify-end">
             <input type="hidden" name="is_published" value="0">
             <label class="inline-flex items-center cursor-pointer">
                 <input name="is_published" 

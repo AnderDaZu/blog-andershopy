@@ -25,7 +25,7 @@
         </div>
 
         <div class="my-4 grid sm:grid-cols-5 md:grid-cols-6 items-center">
-            <x-label class="sm:col-span-2 mr-2 taxt-base md:text-lg uppercase">
+            <x-label class="sm:col-span-2 mr-2 taxt-base md:text-lg uppercase" value="{{ old('slug') }}">
                 Slug
             </x-label>
 

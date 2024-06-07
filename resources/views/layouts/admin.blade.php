@@ -23,7 +23,7 @@
         <!-- Styles -->
         @livewireStyles
 
-        @stack('styles')
+        @stack('css')
     </head>
     {{-- x-data -> indica que se trabajará con alpine.js --}}
     <body class="font-sans antialiased sm:overflow-auto" 

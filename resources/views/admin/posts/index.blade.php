@@ -10,7 +10,7 @@
         </x-cstm_button_create>
     </div>
 
-    <div id="show_1" class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div id="show_2" class="relative overflow-x-auto shadow-md sm:rounded-lg hidden">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -33,7 +33,8 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="px-6 py-4">
                             <a href="{{ route('admin.posts.edit', $post) }}">
-                                <img src="{{ $post->image_path }}" alt="{{ $post->title }}" class="aspect-[16/9] object-cover object-center rounded h-32 max-w-44">
+                                {{-- post->image -> se definio en el modelo como una propiedad en base del valor de $post->image_path --}}
+                                <img src="{{ $post->image }}" alt="{{ $post->title }}" class="aspect-[16/9] object-cover object-center rounded h-32 max-w-44">
                             </a>
                         </td>
                         <th class="px-6 py-4 font-medium text-gray-900 dark:text-white text-sm sm:text-lg">
@@ -67,12 +68,12 @@
         </table>
     </div>
 
-    <ul id="show_2" class="space-y-8 hidden">
+    <ul id="show_1" class="space-y-8">
         @foreach ($posts as $post)
             <li class="grid sm:grid-cols-3 sm:gap-4 pb-4 pt-2 sm-py-0 px-3 border border-gray-100 sm:border-2 rounded shadow-lg">
                 <div class="sm:aspect-[16/9] object-cover object-center">
                     <a href="{{ route('admin.posts.edit', $post) }}">
-                        <img src="{{ $post->image_path }}" alt="{{ $post->title }}"
+                        <img src="{{ $post->image }}" alt="{{ $post->title }}"
                             class="rounded">
                     </a>
                 </div>

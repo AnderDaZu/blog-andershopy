@@ -71,13 +71,8 @@
             </x-label>
             <select class="tag-multiple w-full sm:col-span-3 md:col-span-4" name="tags[]" multiple="multiple">
                 {{-- <option value="WY">Wyoming</option> --}}
-                @foreach ($tags as $tag)
-                    <option value="{{ $tag->id }}" 
-                        {{-- @selected( old('tags[]', $post->tags->contains($tag->id)) ) --}}
-                        {{-- collect -> recibe bien sea un array de ids de tags seleccionados 
-                             o un array de ids de tags que estan asociados al post --}}
-                        @selected( collect( old('tags', $post->tags->pluck('id')) )->contains($tag->id) )
-                    >{{ $tag->name }}</option>
+                @foreach ($post->tags as $tag)
+                    <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -142,7 +137,23 @@
             }
 
             $(document).ready(function() {
-                $('.tag-multiple').select2();
+                $('.tag-multiple').select2({
+                    ajax: {
+                        url: "{{ route('api.tags.index') }}",
+                        dataType: 'json',
+                        delay: 250,
+                        data: params => {
+                            return {
+                                term: params.term
+                            }
+                        },
+                        processResults: data => {
+                            return {
+                                results: data
+                            }
+                        }
+                    }
+                });
             });
         </script>
     @endpush

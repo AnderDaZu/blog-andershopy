@@ -47,9 +47,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        $tags = Tag::all();
+        // $tags = Tag::all();
         // return $post->tags->pluck('id');
-        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     public function update(Request $request, Post $post)

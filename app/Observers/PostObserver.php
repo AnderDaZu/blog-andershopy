@@ -16,7 +16,8 @@ class PostObserver
     // para cuando se esta creando un post
     public function creating( Post $post )
     {
-        $post->user_id = auth()->id();
+        // app()->runningInConsole() -> permite identificar si algún algún proceso/comando de la aplicación se ejecuta desde consola
+        if( !app()->runningInConsole() ) $post->user_id = auth()->id();
     }
 
 

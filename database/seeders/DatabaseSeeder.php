@@ -15,17 +15,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(20)->create();
-
         User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@test.com',
             'password' => bcrypt('12345678'),
         ]);
 
+        User::factory(20)->create();
+
         Category::factory(5)->create();
 
         Post::factory(50)->create();
 
+        $this->call(TagSeeder::class);
     }
 }

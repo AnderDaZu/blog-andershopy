@@ -1,5 +1,9 @@
 <x-admin-layout>
 
+    @push('css')
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    @endpush
+
     <h1 class="text-base sm:text-xl md:text-2xl font-semibold uppercase">Editar Artículo</h1>
     
     <hr class="my-2">
@@ -63,6 +67,21 @@
         
         <div class="my-4 grid sm:grid-cols-5 md:grid-cols-6 items-center">
             <x-label class="sm:col-span-2 mr-2 taxt-base md:text-lg uppercase">
+                Etiquetas
+            </x-label>
+            <select class="tag-multiple w-full sm:col-span-3 md:col-span-4" name="tags[]" multiple="multiple">
+                @foreach (old('tags', $post->tags ) as $item)
+                    @if ( collect(old('tags') ?? [])->isNotEmpty() )
+                        <option value="{{ $item }}" selected>{{ $item }}</option>
+                    @else
+                        <option value="{{ $item->name }}" selected>{{ $item->name }}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
+            
+        <div class="my-4 grid sm:grid-cols-5 md:grid-cols-6 items-center">
+            <x-label class="sm:col-span-2 mr-2 taxt-base md:text-lg uppercase">
                 Cuerpo
             </x-label>
             <x-cstm-textarea class="w-full sm:col-span-3 md:col-span-4" name="body">
@@ -98,6 +117,10 @@
     </form>
 
     @push('js')
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        {{-- Select2 le ofrece un cuadro de selección personalizable compatible con búsqueda, etiquetado,   --}}
+        {{-- conjuntos de datos remotos, desplazamiento infinito y muchas otras opciones muy utilizadas. --}}
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
             function deletePost(){
                 Swal.fire({
@@ -115,6 +138,28 @@
                     }    
                 })
             }
+
+            $(document).ready(function() {
+                $('.tag-multiple').select2({
+                    tags: true, // permite agregar valores que no están en la db
+                    tokenSeparators: [',', ' '], // cuando se va a agregar una etiqueta, esta propiedad permite agregarla luego de escribirla y de habar dado ',' o ' '
+                    ajax: {
+                        url: "{{ route('api.tags.index') }}",
+                        dataType: 'json',
+                        delay: 250,
+                        data: params => {
+                            return {
+                                term: params.term
+                            }
+                        },
+                        processResults: data => {
+                            return {
+                                results: data
+                            }
+                        }
+                    }
+                });
+            });
         </script>
     @endpush
 

@@ -32,13 +32,13 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path('app'), // blog/storage/app
             'throw' => false,
         ],
 
-        'public' => [
+        'public' => [ // este disco permite que el contenido que se requiera mostrar se logre mostrar desde la carpeta publica
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => storage_path('app/public'), // blog/storage/app/public
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,

@@ -70,9 +70,12 @@
                 Etiquetas
             </x-label>
             <select class="tag-multiple w-full sm:col-span-3 md:col-span-4" name="tags[]" multiple="multiple">
-                {{-- <option value="WY">Wyoming</option> --}}
-                @foreach ($post->tags as $tag)
-                    <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
+                @foreach (old('tags', $post->tags ) as $item)
+                    @if ( collect(old('tags') ?? [])->isNotEmpty() )
+                        <option value="{{ $item }}" selected>{{ $item }}</option>
+                    @else
+                        <option value="{{ $item->name }}" selected>{{ $item->name }}</option>
+                    @endif
                 @endforeach
             </select>
         </div>
@@ -138,6 +141,8 @@
 
             $(document).ready(function() {
                 $('.tag-multiple').select2({
+                    tags: true, // permite agregar valores que no están en la db
+                    tokenSeparators: [',', ' '], // cuando se va a agregar una etiqueta, esta propiedad permite agregarla luego de escribirla y de habar dado ',' o ' '
                     ajax: {
                         url: "{{ route('api.tags.index') }}",
                         dataType: 'json',

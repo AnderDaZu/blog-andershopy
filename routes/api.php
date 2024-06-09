@@ -10,8 +10,13 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/tags', function (Request $request) {
     $term = $request->term ?? '';
-    return Tag::select('id', 'name as text')
+    return Tag::select('name')
         ->where('name', 'like', "%$term%")
         ->limit(10)
-        ->get();
+        ->get()->map(function ($tag) {
+            return [
+                'id' => $tag->name,
+                'text' => $tag->name
+            ];
+        });
 })->name('api.tags.index');

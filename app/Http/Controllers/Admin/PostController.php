@@ -61,10 +61,19 @@ class PostController extends Controller
             'category_id' => 'required|exists:categories,id',
             'excerpt' => $request['is_published'] ? 'required' : 'nullable',
             'body' => $request['is_published'] ? 'required' : 'nullable',
-            'is_published' => 'required|boolean'
+            'is_published' => 'required|boolean',
+            'tags' => 'nullable|array'
         ]);
 
-        $post->tags()->sync($request->tags);
+        $tags = [];
+
+        foreach ($request->tags ?? [] as $name) {
+            // firstOrCreate -> busca si hay algún registro en la db que coincida, de no existir lo crea
+            $tag = Tag::firstOrCreate(['name' => $name]);
+            $tags[] = $tag->id;
+        }
+
+        $post->tags()->sync($tags);
 
         $post->update( $request->all() );
 

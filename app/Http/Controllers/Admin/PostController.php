@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -62,8 +63,11 @@ class PostController extends Controller
             'excerpt' => $request['is_published'] ? 'required' : 'nullable',
             'body' => $request['is_published'] ? 'required' : 'nullable',
             'is_published' => 'required|boolean',
-            'tags' => 'nullable|array'
+            'tags' => 'nullable|array',
+            'image' => 'nullable|image',
         ]);
+
+        $data = $request->all();
 
         $tags = [];
 
@@ -75,7 +79,14 @@ class PostController extends Controller
 
         $post->tags()->sync($tags);
 
-        $post->update( $request->all() );
+        if( $request->file('image') ) 
+        {
+            if ( $post->image_path ) Storage::delete($post->image_path);
+
+            $data['image_path'] = Storage::put('posts', $request->file('image'));
+        }
+
+        $post->update( $data );
 
         session()->flash('swal', [
             'position' => "top-end",

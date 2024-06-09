@@ -8,16 +8,39 @@
     
     <hr class="my-2">
 
-    <form action="{{ route('admin.posts.update', $post) }}" method="post">
+    <form action="{{ route('admin.posts.update', $post) }}" 
+        enctype="multipart/form-data" {{-- Esta propiedad habilita la subida de archivos --}}
+        method="post">
         @csrf
         @method('PUT')
+
+        <div class="my-4 mx-auto">
+            <figure class="w-full relative">
+                <img class="aspect-[16/9] object-cover object-center max-w-md rounded-lg border-gray-400 border-dashed border-2 border-opacity-60" 
+                    src="{{$post->image}}" 
+                    id="imgPreview"
+                    alt="image description">
+                
+                <div class="absolute left-4 top-4">
+                    <label class="cursor-pointer bg-slate-200 text-gray-700 py-2 px-4 rounded-md shadow-md">
+                        <i class="fa-solid fa-camera mr-2"></i> Actualizar Imagen
+
+                        <input type="file" 
+                            accept="image/*" 
+                            name="image" 
+                            onchange="previewImage(event, '#imgPreview')"
+                            class="hidden">
+                    </label>
+                </div>
+            </figure>
+        </div>
 
         <div class="my-4 grid sm:grid-cols-5 md:grid-cols-6 items-center">
             <x-label class="sm:col-span-2 mr-2 taxt-base md:text-lg uppercase">
                 Título
             </x-label>
 
-            <x-input class="block mt-1 w-full sm:col-span-3 md:col-span-4" type="text" name="title" value="{{ old('title', $post->title) }}" placeholder="Ingrese título del artículo"  autofocus />
+            <x-input class="block mt-1 w-full sm:col-span-3 md:col-span-4" type="text" name="title" value="{{ old('title', $post->title) }}" placeholder="Ingrese título del artículo" />
 
         </div>
         <div class="flex sm:justify-end">
@@ -137,6 +160,27 @@
                         document.getElementById('formDelete').submit();
                     }    
                 })
+            }
+
+            function previewImage( event, id ){
+
+                // Recuperamos el input que desencadeno la acción
+                const input = event.target;
+
+                // Recuperamos la etiqueta img donde cargaremos la imagen
+                $imgPreview = document.querySelector(id);
+
+                // Validamos si existe una imagen seleccionada
+                if ( !input.files.length ) return
+
+                // Recuperamos el archivo subido
+                file = input.files[0]
+
+                // Creamos la url
+                objectURL = URL.createObjectURL(file)
+
+                // Modificamos el atributo src de la etiqueta img
+                $imgPreview.src = objectURL
             }
 
             $(document).ready(function() {

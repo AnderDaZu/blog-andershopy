@@ -89,14 +89,15 @@ class PostController extends Controller
 
             $file_name = $post->slug . $ext;
 
-            if (Storage::exists($dir . '/' . $file_name)) $file_name = str_replace($ext, '-(' . $id . ')' . $ext, $file_name);
+            // Si se maneja disco s3 en la nube, 👇 esta validación debe cambiar o comentarse
+            // if (Storage::exists($dir . '/' . $file_name)) $file_name = str_replace($ext, '-(' . $id . ')' . $ext, $file_name);
 
             // opción 1 para subir imagenes
             // put -> permite subir imagenes | puFileAs -> permite subir y definir el nombre de la imagen
-            $data['image_path'] = Storage::putFileAs($dir, $request->image, $file_name);
+            // $data['image_path'] = Storage::putFileAs($dir, $request->image, $file_name);
 
             // opción 2 para subir imagenes
-            // $data['image_path'] = $request->file('image')->storeAs($dir, $file_name);
+            $data['image_path'] = $request->file('image')->storeAs($dir, $file_name);
         }
 
         $post->update( $data );

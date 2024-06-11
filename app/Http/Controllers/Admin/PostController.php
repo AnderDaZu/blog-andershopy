@@ -81,12 +81,18 @@ class PostController extends Controller
 
         if( $request->file('image') ) 
         {
+            $dir = 'posts'; // folder to save images
+            $ext = '.' . $request->file('image')->getClientOriginalExtension(); // get image extension
+            $id = $post->id;
+
             if ( $post->image_path ) Storage::delete($post->image_path);
 
-            $file_name = $post->slug . '.' . $request->file('image')->getClientOriginalExtension();
+            $file_name = $post->slug . $ext;
+
+            if (Storage::exists($dir . '/' . $file_name)) $file_name = str_replace($ext, '-(' . $id . ')' . $ext, $file_name);
 
             // put -> permite subir imagenes | puFileAs -> permite subir y definir el nombre de la imagen
-            $data['image_path'] = Storage::putFileAs('posts', $request->image, $file_name);
+            $data['image_path'] = Storage::putFileAs($dir, $request->image, $file_name);
         }
 
         $post->update( $data );

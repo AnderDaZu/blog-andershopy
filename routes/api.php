@@ -32,4 +32,7 @@ Route::get('/files', function (Request $request) {
     // Storage::directories('posts');
     // metodo para obtener todos los directorios del directorio y subdirectorios del directorio especificado
     // Storage::allDirectories('posts');
+
+    // método para descargar archivos, es de resaltar que para que funcione bien este método se debe usar con return
+    // return Storage::download('posts/1.jpg');
 })->name('api.files.index');

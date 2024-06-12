@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class PostController extends Controller
 {
     public function image( Post $post ) {
-        $image = Storage::get($post->image_path);
+        $image = Storage::disk('s3')->get($post->image_path);
         return response($image)
             ->header('Content-Type', 'image/jpeg');
     }

@@ -95,11 +95,13 @@ class PostController extends Controller
             // opción 1 para subir imagenes
             // put -> permite subir imagenes | puFileAs -> permite subir y definir el nombre de la imagen
             // punlic -> permite que los archivos subidos en s3 queden con permisos para ser publicos
-            // $data['image_path'] = Storage::putFileAs($dir, $request->image, $file_name, 'public');
+            // disk -> permite definir de manera concreta con que disco debe trabajar
+            // $data['image_path'] = Storage::disk('s3')->putFileAs($dir, $request->image, $file_name, 'public');
 
             // opción 2 para subir imagenes
             // [ 'visibility' => 'public' ] -> permite que los archivos subidos en s3 queden con permisos para ser publicos
             $data['image_path'] = $request->file('image')->storeAs($dir, $file_name, [
+                'disk' => 's3', // se indica que se capta desde disco s3, porque en .env se establece public por defecto
                 'visibility' => 'public'
             ]);
         }

@@ -57,6 +57,8 @@
                 Swal.fire(@json(session('swal')));
             </script>
         @endif
+
+        <script src="{{ asset('assets/ckeditor/ckeditor.js') }}"></script>
     
         @stack('js')
     </body>

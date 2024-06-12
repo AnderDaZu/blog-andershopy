@@ -2,10 +2,42 @@
 
     @push('css')
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <style>
+            @media (min-width: 768px) {
+                .cstm-width {
+                    width: 320px;
+                }
+            }
+            @media (min-width: 800px) {
+                .cstm-width {
+                    width: 360px;
+                }
+            }
+            @media (min-width: 860px) {
+                .cstm-width {
+                    width: 420px;
+                }
+            }
+            @media (min-width: 980px) {
+                .cstm-width {
+                    width: 480px;
+                }
+            }
+            @media (min-width: 1024px) {
+                .cstm-width {
+                    width: 576px;
+                }
+            }
+            @media (min-width: 1280px) {
+                .cstm-width {
+                    width: 680px;
+                }
+            }
+        </style>
     @endpush
 
     <h1 class="text-base sm:text-xl md:text-2xl font-semibold uppercase">Editar Artículo</h1>
-    
+    {{-- <p class="max-w-md lg:max-w-lg w-x md xl"></p> --}}
     <hr class="my-2">
 
     <form action="{{ route('admin.posts.update', $post) }}" 
@@ -15,8 +47,8 @@
         @method('PUT')
 
         <div class="my-4 mx-auto">
-            <figure class="w-full relative">
-                <img class="aspect-[16/9] object-cover object-center max-w-md rounded-lg border-gray-400 border-dashed border-2 border-opacity-60" 
+            <figure class="max-w-full relative">
+                <img class="aspect-[16/9] object-cover object-center max-w-64 sm:max-w-sm md:max-w-md rounded-lg border-gray-400 border-dashed border-2 border-opacity-60" 
                     src="{{$post->image}}" 
                     id="imgPreview"
                     alt="image description">
@@ -35,24 +67,24 @@
             </figure>
         </div>
 
-        <div class="my-4 grid sm:grid-cols-5 md:grid-cols-6 items-center">
-            <x-label class="sm:col-span-2 mr-2 taxt-base md:text-lg uppercase">
+        <div class="my-4 flex flex-col md:flex-row sm:justify-between">
+            <x-label class="text-base md:text-lg uppercase">
                 Título
             </x-label>
 
-            <x-input class="block mt-1 w-full sm:col-span-3 md:col-span-4" type="text" name="title" value="{{ old('title', $post->title) }}" placeholder="Ingrese título del artículo" />
+            <x-input class="cstm-width" type="text" name="title" value="{{ old('title', $post->title) }}" placeholder="Ingrese título del artículo" />
 
         </div>
         <div class="flex sm:justify-end">
             <x-input-error for="title" class="-mt-2" />
         </div>
 
-        <div class="my-4 grid sm:grid-cols-5 md:grid-cols-6 items-center">
-            <x-label class="sm:col-span-2 mr-2 taxt-base md:text-lg uppercase">
+        <div class="my-4 flex flex-col md:flex-row sm:justify-between">
+            <x-label class="text-base md:text-lg uppercase">
                 Slug
             </x-label>
 
-            <x-input class="block mt-1 w-full sm:col-span-3 md:col-span-4" type="text" name="slug" 
+            <x-input class="cstm-width" type="text" name="slug" 
                 :value="old('slug', $post->slug)" 
                 placeholder="Ingrese slug"
                 :disabled="true"/>
@@ -61,12 +93,12 @@
             <x-input-error for="slug" class="-mt-2" />
         </div>
 
-        <div class="my-4 grid sm:grid-cols-5 md:grid-cols-6 items-center">
-            <x-label class="sm:col-span-2 mr-2 taxt-base md:text-lg uppercase">
+        <div class="my-4 flex flex-col md:flex-row sm:justify-between">
+            <x-label class="text-base md:text-lg uppercase">
                 Categoría
             </x-label>
 
-            <x-cstm-select class="w-full sm:col-span-3 md:col-span-4" name="category_id">
+            <x-cstm-select class="cstm-width" name="category_id">
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}" @selected( $category->id == old('category_id', $post->category_id) )>{{ $category->name }}</option>
                 @endforeach
@@ -76,11 +108,11 @@
             <x-input-error for="category_id" class="-mt-2" />
         </div>
 
-        <div class="my-4 grid sm:grid-cols-5 md:grid-cols-6 items-center">
-            <x-label class="sm:col-span-2 mr-2 taxt-base md:text-lg uppercase">
+        <div class="my-4 flex flex-col md:flex-row sm:justify-between">
+            <x-label class="text-base md:text-lg uppercase">
                 Resumen
             </x-label>
-            <x-cstm-textarea class="w-full sm:col-span-3 md:col-span-4" name="excerpt">
+            <x-cstm-textarea class="cstm-width" name="excerpt">
                 {{ old('excerpt', $post->excerpt) }}
             </x-cstm-textarea>
         </div>
@@ -88,26 +120,28 @@
             <x-input-error for="excerpt" class="-mt-2" />
         </div>
         
-        <div class="my-4 grid sm:grid-cols-5 md:grid-cols-6 items-center">
-            <x-label class="sm:col-span-2 mr-2 taxt-base md:text-lg uppercase">
+        <div class="my-4 flex flex-col md:flex-row sm:justify-between">
+            <x-label class="text-base md:text-lg uppercase">
                 Etiquetas
             </x-label>
-            <select class="tag-multiple w-full sm:col-span-3 md:col-span-4" name="tags[]" multiple="multiple">
+            <select class="tag-multiple cstm-width" name="tags[]" multiple="multiple">
                 @foreach (old('tags', $post->tags ) as $item)
                     @if ( collect(old('tags') ?? [])->isNotEmpty() )
-                        <option value="{{ $item }}" selected>{{ $item }}</option>
+                        <option class="" value="{{ $item }}" selected>{{ $item }}</option>
                     @else
-                        <option value="{{ $item->name }}" selected>{{ $item->name }}</option>
+                        <option class="" value="{{ $item->name }}" selected>{{ $item->name }}</option>
                     @endif
                 @endforeach
             </select>
         </div>
+
+        <hr class="mt-6">
             
-        <div class="my-4 grid sm:grid-cols-5 md:grid-cols-6 items-center">
-            <x-label class="sm:col-span-2 mr-2 taxt-base md:text-lg uppercase">
+        <div class="my-2">
+            <x-label class="mb-2 taxt-base md:text-lg uppercase">
                 Cuerpo
             </x-label>
-            <x-cstm-textarea class="w-full sm:col-span-3 md:col-span-4" name="body">
+            <x-cstm-textarea class="w-full inline" name="body" id="editor">
                 {{ old('body', $post->body) }}
             </x-cstm-textarea>
         </div>
@@ -204,6 +238,13 @@
                     }
                 });
             });
+
+            // ckeditor
+            ClassicEditor
+                .create( document.querySelector( '#editor' ) )
+                .catch( error => {
+                    console.error( error );
+                } );
         </script>
     @endpush
 

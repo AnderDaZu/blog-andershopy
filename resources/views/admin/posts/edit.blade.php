@@ -141,9 +141,11 @@
             <x-label class="mb-2 taxt-base md:text-lg uppercase">
                 Cuerpo
             </x-label>
-            <x-cstm-textarea class="w-full inline" name="body" id="editor">
-                {{ old('body', $post->body) }}
-            </x-cstm-textarea>
+            <div class="ckeditor">
+                <x-cstm-textarea class="w-full inline" name="body" id="editor">
+                    {{ old('body', $post->body) }}
+                </x-cstm-textarea>
+            </div>
         </div>
         <div class="flex sm:justify-end">
             <x-input-error for="body" class="-mt-2" />

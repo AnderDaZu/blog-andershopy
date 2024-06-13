@@ -1,0 +1,37 @@
+.ckeditor ul {
+    @apply list-disc list-inside;
+}
+
+.ckeditor ol {
+    @apply list-decimal list-inside;
+}
+
+.ckeditor ul span,
+.ckeditor ol span {
+    @apply inline !important
+}
+
+.ckeditor a {
+    @apply text-blue-600 visited:text-purple-600 hover:text-blue-500 underline; 
+}
+
+.ckeditor h2 {
+    @apply text-2xl font-bold;
+}
+
+.ckeditor h3 {
+    @apply text-xl font-semibold;
+}
+
+.ckeditor h4 {
+    @apply text-lg font-semibold;
+}
+
+.ckeditor ul:not(:last-child), 
+.ckeditor ol:not(:last-child), 
+.ckeditor p:not(:last-child), 
+.ckeditor h2:not(:last-child), 
+.ckeditor h3:not(:last-child), 
+.ckeditor h4:not(:last-child) {
+    @apply mb-4;
+}

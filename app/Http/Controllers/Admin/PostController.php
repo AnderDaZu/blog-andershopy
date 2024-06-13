@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -66,6 +67,34 @@ class PostController extends Controller
             'tags' => 'nullable|array',
             'image' => 'nullable|image',
         ]);
+
+        $old_images = $post->images->pluck('path')->toArray();
+
+        $re_extractImages = '/src=["\']([^ ^"^\']*)["\']/ims'; // expresión regualar para encontrar url de imagenes
+        preg_match_all($re_extractImages, $request->body, $matches); // buscar y seleccionar imagenes en el campo body
+        $images = $matches[1]; // definir el array de imaganes en contradas en body
+
+        foreach ($images as $key => $image) {
+            $images[$key] = 'images/' . pathinfo($image, PATHINFO_BASENAME); // capturar nombre de las imagenes y aducuarlas
+        }
+
+        $delete_images = array_diff($old_images, $images);
+
+        foreach ($delete_images as $image) {
+            Storage::delete($image);
+
+            // $post->images()->where('path', $image)->delete();
+            Image::where('path', $image)->delete();
+        }
+
+        $new_images = array_diff($images, $old_images);
+        
+        foreach ($new_images as $image) {
+            // guardar imagenes
+            $post->images()->create([
+                'path' => $image
+            ]);
+        }
 
         $data = $request->all();
 

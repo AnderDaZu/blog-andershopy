@@ -242,8 +242,17 @@
             });
 
             // ckeditor
+
             ClassicEditor
-                .create( document.querySelector( '#editor' ) )
+                .create( document.querySelector( '#editor' ), {
+                    simpleUpload: {
+                        uploadUrl: "{{ route('images.upload') }}",
+                        withCredentials: true,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        }
+                    }
+                } )
                 .catch( error => {
                     console.error( error );
                 } );

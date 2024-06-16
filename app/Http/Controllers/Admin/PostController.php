@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image as ImageIntervention;
 
 class PostController extends Controller
 {
@@ -125,14 +126,23 @@ class PostController extends Controller
             // put -> permite subir imagenes | puFileAs -> permite subir y definir el nombre de la imagen
             // punlic -> permite que los archivos subidos en s3 queden con permisos para ser publicos
             // disk -> permite definir de manera concreta con que disco debe trabajar
-            // $data['image_path'] = Storage::disk('s3')->putFileAs($dir, $request->image, $file_name, 'public');
+            $data['image_path'] = Storage::putFileAs($dir, $request->image, $file_name, 'public');
+
+            ini_set('memory_limit', "2000M");
+            
+            $img = ImageIntervention::make('storage/' . $data['image_path']);
+            $img->resize(1200, null, function($constraint){
+                $constraint->aspectRatio();
+            });
+            $img->save();
+            // dd($img);
 
             // opción 2 para subir imagenes
             // [ 'visibility' => 'public' ] -> permite que los archivos subidos en s3 queden con permisos para ser publicos
-            $data['image_path'] = $request->file('image')->storeAs($dir, $file_name, [
-                'disk' => 's3', // se indica que se capta desde disco s3, porque en .env se establece public por defecto
-                'visibility' => 'public'
-            ]);
+            // $data['image_path'] = $request->file('image')->storeAs($dir, $file_name, [
+            //     'disk' => 's3', // se indica que se capta desde disco s3, porque en .env se establece public por defecto
+            //     'visibility' => 'public'
+            // ]);
         }
 
         $post->update( $data );

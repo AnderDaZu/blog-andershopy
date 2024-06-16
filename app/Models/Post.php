@@ -46,10 +46,10 @@ class Post extends Model
                     }
                     // return asset('storage/' . $this->image_path);
                     // lo de 👇 es igual a lo de ☝️
-                    // return Storage::url($this->image_path);
+                    return Storage::url($this->image_path);
 
                     // se usa este porque se establecio el disco con s3, por ello se esta consumiendo un elemento privado de digital ocean
-                    return route('posts.image', $this);
+                    // return route('posts.image', $this);
                 }else{
                     return 'https://camarasal.com/wp-content/uploads/2020/08/default-image-5-1.jpg';
                 }

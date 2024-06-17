@@ -29,7 +29,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         // then permite registrar nuevos archivos de ruta
         then: function () {
-            Route::middleware(['web', 'auth', 'is_admin'])
+            Route::middleware(['web', 
+                'auth', 
+                'is_admin',  // mediante middleware -> este redirecciona
+                // 'can:admin', // mediante gate -> este muestra vista 403
+            ])
                 ->prefix('admin')
                 ->name('admin.')
                 ->group(base_path('routes/admin.php'));

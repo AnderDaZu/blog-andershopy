@@ -27,11 +27,21 @@
                 @auth
                     <!-- Navigation Links -->
                     @foreach ($links as $link)
-                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                            <x-nav-link href="{{ $link['url'] }}" :active="$link['active']">
-                                {{ $link['name'] }}
-                            </x-nav-link>
-                        </div>
+                        @if ( $link['name'] == 'Admin' )
+                            @can('admin')
+                                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                    <x-nav-link href="{{ $link['url'] }}" :active="$link['active']">
+                                        {{ $link['name'] }}
+                                    </x-nav-link>
+                                </div>
+                            @endcan
+                        @else
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <x-nav-link href="{{ $link['url'] }}" :active="$link['active']">
+                                    {{ $link['name'] }}
+                                </x-nav-link>
+                            </div>
+                        @endif
                     @endforeach
                 @endauth
             </div>

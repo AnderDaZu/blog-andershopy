@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ResizeImage;
 use App\Models\Category;
 use App\Models\Image;
 use App\Models\Post;
@@ -128,34 +129,8 @@ class PostController extends Controller
             // disk -> permite definir de manera concreta con que disco debe trabajar
             $data['image_path'] = Storage::putFileAs($dir, $request->image, $file_name, 'public');
 
-            // ini_set('memory_limit', "2000M"); // para asignar cantidad de memoria
-
-            list($width) = getimagesize('storage/' . $data['image_path']);
-            $size = filesize('storage/' . $data['image_path']);
-            $filesize = round( ($size / 1048576), 2 );
-            
-            // si el ancho de la imagen es mayor a 1200 o el tamaño del archivo es mayor a 0.2 MB
-            // se redimensiona la imagen
-            if( $width > 1200 || $filesize > 0.2 )
-            {
-                $path_img = 'storage/' . $data['image_path'];
-                $img = ImageIntervention::make($path_img);
-
-                if( $width > 1200 )
-                {
-                    $img->resize(1200, null, function($constraint){
-                        $constraint->aspectRatio();
-                    });
-                }
-
-                if( $filesize > 0.2 ) 
-                {
-                    $img->save($path_img, 80, 'jpg');
-                } else {
-                    $img->save();
-                }
-
-            }
+            // Redimencionar imagen con job
+            ResizeImage::dispatch($data['image_path']);
 
             // opción 2 para subir imagenes
             // [ 'visibility' => 'public' ] -> permite que los archivos subidos en s3 queden con permisos para ser publicos

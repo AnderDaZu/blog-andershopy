@@ -65,6 +65,14 @@
                                     {{ __('Manage Account') }}
                                 </div>
 
+                                {{-- empleando el gate 'admin' para proteger acciones y rutas --}}
+                                {{-- en laravel 11 los gates se definen en App\Providers\AppServiceProvider --}}
+                                @can('admin')
+                                    <x-dropdown-link href="{{ route('admin.dashboard') }}">
+                                        Administrador
+                                    </x-dropdown-link>
+                                @endcan
+                                
                                 <x-dropdown-link href="{{ route('profile.show') }}">
                                     {{ __('Profile') }}
                                 </x-dropdown-link>

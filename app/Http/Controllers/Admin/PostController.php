@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image as ImageIntervention;
 
 class PostController extends Controller
 {
@@ -56,7 +57,7 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        // return $request->all();
+        // dd( $request->image);
         $request->validate([
             'title' => 'required|string|max:255',
             // 'slug' => 'required|unique:posts,slug,' . $post->id,
@@ -65,7 +66,7 @@ class PostController extends Controller
             'body' => $request['is_published'] ? 'required' : 'nullable',
             'is_published' => 'required|boolean',
             'tags' => 'nullable|array',
-            'image' => 'nullable|image',
+            'image' => $request->image ? 'required|image|max:2048' : 'nullable',
         ]);
 
         $old_images = $post->images->pluck('path')->toArray();
@@ -125,14 +126,43 @@ class PostController extends Controller
             // put -> permite subir imagenes | puFileAs -> permite subir y definir el nombre de la imagen
             // punlic -> permite que los archivos subidos en s3 queden con permisos para ser publicos
             // disk -> permite definir de manera concreta con que disco debe trabajar
-            // $data['image_path'] = Storage::disk('s3')->putFileAs($dir, $request->image, $file_name, 'public');
+            $data['image_path'] = Storage::putFileAs($dir, $request->image, $file_name, 'public');
+
+            // ini_set('memory_limit', "2000M"); // para asignar cantidad de memoria
+
+            list($width) = getimagesize('storage/' . $data['image_path']);
+            $size = filesize('storage/' . $data['image_path']);
+            $filesize = round( ($size / 1048576), 2 );
+            
+            // si el ancho de la imagen es mayor a 1200 o el tamaño del archivo es mayor a 0.2 MB
+            // se redimensiona la imagen
+            if( $width > 1200 || $filesize > 0.2 )
+            {
+                $path_img = 'storage/' . $data['image_path'];
+                $img = ImageIntervention::make($path_img);
+
+                if( $width > 1200 )
+                {
+                    $img->resize(1200, null, function($constraint){
+                        $constraint->aspectRatio();
+                    });
+                }
+
+                if( $filesize > 0.2 ) 
+                {
+                    $img->save($path_img, 80, 'jpg');
+                } else {
+                    $img->save();
+                }
+
+            }
 
             // opción 2 para subir imagenes
             // [ 'visibility' => 'public' ] -> permite que los archivos subidos en s3 queden con permisos para ser publicos
-            $data['image_path'] = $request->file('image')->storeAs($dir, $file_name, [
-                'disk' => 's3', // se indica que se capta desde disco s3, porque en .env se establece public por defecto
-                'visibility' => 'public'
-            ]);
+            // $data['image_path'] = $request->file('image')->storeAs($dir, $file_name, [
+            //     'disk' => 's3', // se indica que se capta desde disco s3, porque en .env se establece public por defecto
+            //     'visibility' => 'public'
+            // ]);
         }
 
         $post->update( $data );

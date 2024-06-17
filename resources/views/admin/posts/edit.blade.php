@@ -66,6 +66,9 @@
                 </div>
             </figure>
         </div>
+        <div class="flex">
+            <x-input-error for="image" class="-mt-2" />
+        </div>
 
         <div class="my-4 flex flex-col md:flex-row sm:justify-between">
             <x-label class="text-base md:text-lg uppercase">

@@ -29,11 +29,11 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         // Limpieza de imagenes
-        $schedule->call(function(){
-            $files = Storage::files('images');
-            $images = Image::pluck('path')->toArray();
-            Storage::delete(array_diff($files, $images));
-        })->daily();
+        // $schedule->call(function(){
+        //     $files = Storage::files('images');
+        //     $images = Image::pluck('path')->toArray();
+        //     Storage::delete(array_diff($files, $images));
+        // })->daily();
 
         // para ejecutar esta tarea programada desde línea de comandos
         // php artisan schedule:work

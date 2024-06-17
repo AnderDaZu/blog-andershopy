@@ -9,6 +9,7 @@ use App\Models\Image;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as ImageIntervention;
 
@@ -16,7 +17,9 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest('id')->paginate(4);
+        $posts = Post::where('user_id', auth()->id())
+            ->latest('id')
+            ->paginate(4);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -50,6 +53,12 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+        // Método allows() de Gate que verifica si el usuario actual tiene el permiso author para el objeto $post
+        if( !Gate::allows('author', $post) )
+        {
+            abort(403);
+        }
+
         $categories = Category::all();
         // $tags = Tag::all();
         // return $post->tags->pluck('id');

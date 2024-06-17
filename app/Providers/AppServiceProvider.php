@@ -28,5 +28,10 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('admin', function ($user) {
             return $user->is_admin;
         });
+
+        // al momento de llamar este gate, espera que como parametro se le pase un post, el user ya lo capta por defecto
+        Gate::define('author', function ($user, $post) {
+            return $user->id === $post->user_id;
+        });
     }
 }

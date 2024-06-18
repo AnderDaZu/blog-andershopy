@@ -54,10 +54,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         // Método allows() de Gate que verifica si el usuario actual tiene el permiso author para el objeto $post
-        if( !Gate::allows('author', $post) )
-        {
-            abort(403);
-        }
+        if( !Gate::allows('author', $post) ) abort(403, 'No tienes permisos para acceder a este recurso');
+        // lo de 👆 es igual a lo de 👇 -> solo que si se requiere más personalización es mejor el de 👆
+        // $this->authorize('author', $post);
 
         $categories = Category::all();
         // $tags = Tag::all();

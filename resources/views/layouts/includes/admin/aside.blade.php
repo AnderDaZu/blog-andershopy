@@ -18,6 +18,12 @@
             'active' => request()->routeIs('admin.posts.*'),
             'icon' => 'fa-solid fa-signs-post'
         ],
+        [
+            'name' => 'Roles',
+            'url' => route('admin.roles.index'),
+            'active' => request()->routeIs('admin.roles.*'),
+            'icon' => 'fa-solid fa-bars-staggered'
+        ],
     ]
 @endphp
 <aside id="logo-sidebar" 

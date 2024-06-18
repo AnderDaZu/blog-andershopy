@@ -24,6 +24,12 @@
             'active' => request()->routeIs('admin.roles.*'),
             'icon' => 'fa-solid fa-bars-staggered'
         ],
+        [
+            'name' => 'Permisos',
+            'url' => route('admin.permissions.index'),
+            'active' => request()->routeIs('admin.permissions.*'),
+            'icon' => 'fa-solid fa-key'
+        ],
     ]
 @endphp
 <aside id="logo-sidebar" 

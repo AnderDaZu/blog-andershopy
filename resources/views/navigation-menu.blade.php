@@ -27,11 +27,21 @@
                 @auth
                     <!-- Navigation Links -->
                     @foreach ($links as $link)
-                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                            <x-nav-link href="{{ $link['url'] }}" :active="$link['active']">
-                                {{ $link['name'] }}
-                            </x-nav-link>
-                        </div>
+                        @if ( $link['name'] == 'Admin' )
+                            @can('admin')
+                                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                    <x-nav-link href="{{ $link['url'] }}" :active="$link['active']">
+                                        {{ $link['name'] }}
+                                    </x-nav-link>
+                                </div>
+                            @endcan
+                        @else
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <x-nav-link href="{{ $link['url'] }}" :active="$link['active']">
+                                    {{ $link['name'] }}
+                                </x-nav-link>
+                            </div>
+                        @endif
                     @endforeach
                 @endauth
             </div>
@@ -65,6 +75,14 @@
                                     {{ __('Manage Account') }}
                                 </div>
 
+                                {{-- empleando el gate 'admin' para proteger acciones y rutas --}}
+                                {{-- en laravel 11 los gates se definen en App\Providers\AppServiceProvider --}}
+                                @can('admin')
+                                    <x-dropdown-link href="{{ route('admin.dashboard') }}">
+                                        Administrador
+                                    </x-dropdown-link>
+                                @endcan
+                                
                                 <x-dropdown-link href="{{ route('profile.show') }}">
                                     {{ __('Profile') }}
                                 </x-dropdown-link>

@@ -23,6 +23,12 @@ class Post extends Model
         'published_at',
     ];
 
+    // Permite definir el tipo de dato de los campos cuando estos son llamados desde cualquier proceso
+    protected $casts = [
+        'published_at' => 'datetime',
+        'is_published' => 'boolean',
+    ];
+
     protected function title(): Attribute {
 
         return new Attribute(

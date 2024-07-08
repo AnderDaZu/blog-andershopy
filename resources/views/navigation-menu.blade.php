@@ -1,9 +1,9 @@
 @php
     $links = [
         [
-            'name' => 'Dashboard',
-            'url' => route('dashboard'),
-            'active' => request()->routeIs('dashboard')
+            'name' => 'Inicio',
+            'url' => route('home'),
+            'active' => request()->routeIs('home')
         ],
         [
             'name' => 'Admin',

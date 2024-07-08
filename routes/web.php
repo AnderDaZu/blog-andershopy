@@ -2,13 +2,12 @@
 
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\WelcomeController;
 use App\Models\Image;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', WelcomeController::class)->name('home');
 
 Route::middleware([
     'auth:sanctum',

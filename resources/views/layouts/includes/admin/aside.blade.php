@@ -4,37 +4,43 @@
             'name' => 'Dashboard',
             'url' => route('admin.dashboard'),
             'active' => request()->routeIs('admin.dashboard'),
-            'icon' => 'fa-solid fa-gauge-high'
+            'icon' => 'fa-solid fa-gauge-high',
+            'can' => ['Acceso al dashboard']
         ],
         [
             'name' => 'Categorias',
             'url' => route('admin.categories.index'),
             'active' => request()->routeIs('admin.categories.*'),
-            'icon' => 'fa-solid fa-layer-group'
+            'icon' => 'fa-solid fa-layer-group',
+            'can' => ['Gestión de categorías']
         ],
         [
             'name' => 'Posts',
             'url' => route('admin.posts.index'),
             'active' => request()->routeIs('admin.posts.*'),
-            'icon' => 'fa-solid fa-signs-post'
+            'icon' => 'fa-solid fa-signs-post',
+            'can' => ['Gestión de artículos']
         ],
         [
             'name' => 'Roles',
             'url' => route('admin.roles.index'),
             'active' => request()->routeIs('admin.roles.*'),
-            'icon' => 'fa-solid fa-bars-staggered'
+            'icon' => 'fa-solid fa-bars-staggered',
+            'can' => ['Gestión de roles']
         ],
         [
             'name' => 'Permisos',
             'url' => route('admin.permissions.index'),
             'active' => request()->routeIs('admin.permissions.*'),
-            'icon' => 'fa-solid fa-key'
+            'icon' => 'fa-solid fa-key',
+            'can' => ['Gestión de permisos]']
         ],
         [
             'name' => 'Usuarios',
             'url' => route('admin.users.index'),
             'active' => request()->routeIs('admin.users.*'),
-            'icon' => 'fa-solid fa-users'
+            'icon' => 'fa-solid fa-users',
+            'can' => ['Gestión de usuarios']
         ],
     ]
 @endphp
@@ -48,12 +54,15 @@
     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
             @foreach ($links as $link)
-                <li>
-                    <a href="{{ $link['url'] }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ $link['active'] ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
-                        <i class="{{ $link['icon'] }}"></i>
-                        <span class="ms-3">{{ $link['name'] }}</span>
-                    </a>
-                </li>
+                {{-- ?? [null] -> se aplica para indicar que cierto link no requiere de permisos --}}
+                @canany($link['can'] ?? [null] ) 
+                    <li>
+                        <a href="{{ $link['url'] }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ $link['active'] ? 'bg-gray-100 dark:bg-gray-700' : '' }}">
+                            <i class="{{ $link['icon'] }}"></i>
+                            <span class="ms-3">{{ $link['name'] }}</span>
+                        </a>
+                    </li>
+                @endcanany
             @endforeach
         </ul>
     </div>

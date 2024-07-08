@@ -1,4 +1,13 @@
-<x-admin-layout>
+<x-admin-layout
+    :breadcrumb="[
+        [
+            'name' => 'Dashboard',
+            'url' => route('admin.dashboard')
+        ],
+        [
+            'name' => 'Roles',
+        ]
+    ]">
     <h1 class="text-base sm:text-lg md:text-xl uppercase font-bold mb-4">Lista de Roles</h1>
 
     <div class="flex justify-end mb-4">

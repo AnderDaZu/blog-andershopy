@@ -1,4 +1,17 @@
-<x-admin-layout>
+<x-admin-layout
+    :breadcrumb="[
+        [
+            'name' => 'Dashboard',
+            'url' => route('admin.dashboard')
+        ],
+        [
+            'name' => 'Permisos',
+            'url' => route('admin.permissions.index')
+        ],
+        [
+            'name' => 'Crear Permiso'
+        ]
+    ]">
     <h1 class="text-lg sm:text-xl md:text-2xl font-semibold uppercase">Crear nuevo permiso</h1>
 
     <div class="bg-white shadow-md rounded-md p-6 mt-4">

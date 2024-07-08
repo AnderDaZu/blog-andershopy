@@ -15,7 +15,7 @@
             'can' => ['Gestión de categorías']
         ],
         [
-            'name' => 'Posts',
+            'name' => 'Artículos',
             'url' => route('admin.posts.index'),
             'active' => request()->routeIs('admin.posts.*'),
             'icon' => 'fa-solid fa-signs-post',

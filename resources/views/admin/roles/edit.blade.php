@@ -1,4 +1,17 @@
-<x-admin-layout>
+<x-admin-layout
+    :breadcrumb="[
+        [
+            'name' => 'Dashboard',
+            'url' => route('admin.dashboard')
+        ],
+        [
+            'name' => 'Roles',
+            'url' => route('admin.roles.index')
+        ],
+        [
+            'name' => $role->name
+        ]
+    ]">
     
     <div class="flex flex-col sm:flex-row sm:justify-between items-center mb-4">
         <h1 class="text-lg sm:text-xl md:text-2xl font-semibold uppercase mb-2 sm:mb-0">Editar rol</h1>

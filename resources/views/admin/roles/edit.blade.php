@@ -17,6 +17,22 @@
             <x-input name="name" :value="old('name', $role->name)" type="text" class="w-full" placeholder="Ingrese nombre del rol" />
             <x-input-error for="name" class="mt-2" />
 
+            <div class="my-4">
+                <ul>
+                    @foreach ($permissions as $permission)
+                        <li>
+                            <label>
+                                <x-checkbox
+                                    name="permissions[]" 
+                                    value="{{ $permission->id }}" 
+                                    :checked="in_array($permission->id, old('permissions', $role->permissions->pluck('id')->toArray()))"/>
+                                {{ $permission->name }}
+                            </label>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
             <div class="flex sm:justify-end mt-4">
                 <x-danger-button onclick="deleteRol()">Eliminar rol</x-danger-button>
                 <x-button class="ml-2">Actualizar Rol</x-button>

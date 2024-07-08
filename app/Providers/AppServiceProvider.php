@@ -35,5 +35,10 @@ class AppServiceProvider extends ServiceProvider
         // Gate::define('author', function ($user, $post) {
         //     return $user->id === $post->user_id;
         // });
+
+        // Definir rol super admin -> el cual tiene acceso a todos los módulos de la aplicación
+        Gate::after(function ($user, $ability) {
+            return $user->hasRole('Admin');
+        });
     }
 }

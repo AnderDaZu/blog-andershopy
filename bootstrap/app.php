@@ -31,7 +31,7 @@ return Application::configure(basePath: dirname(__DIR__))
         then: function () {
             Route::middleware(['web', 
                 'auth', 
-                'is_admin',  // mediante middleware -> este redirecciona
+                // 'is_admin',  // mediante middleware -> este redirecciona
                 // 'can:admin', // mediante gate -> este muestra vista 403
             ])
                 ->prefix('admin')

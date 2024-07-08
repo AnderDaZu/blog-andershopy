@@ -1,4 +1,17 @@
-<x-admin-layout>
+<x-admin-layout
+    :breadcrumb="[
+        [
+            'name' => 'Dashboard',
+            'url' => route('admin.dashboard')
+        ],
+        [
+            'name' => 'Artículos',
+            'url' => route('admin.posts.index')
+        ],
+        [
+            'name' => 'Crear Artículo'
+        ]
+    ]">
     
     <h1 class="text-lg sm:text-xl md:text-2xl font-semibold uppercase">Crear nuevo artículo</h1>
 

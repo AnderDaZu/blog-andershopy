@@ -9,6 +9,11 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:Gestión de usuarios')->only('index', 'edit', 'update');
+    }
+
     public function index()
     {
         $users = User::paginate(10);

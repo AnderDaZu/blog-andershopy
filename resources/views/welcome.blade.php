@@ -13,7 +13,7 @@
             @foreach ($posts as $post)
                 <article class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 shadow-md p-6 rounded-lg">
                     <figure>
-                        <a href="#">
+                        <a href="{{ route('posts.show', $post) }}">
                             <img src="{{ $post->image }}" alt="{{ $post->title }}"
                                 class="rounded-lg">
                         </a>
@@ -42,7 +42,7 @@
                         </div>
 
                         <div>
-                            <a href="#"
+                            <a href="{{ route('posts.show', $post) }}"
                                 class="bg-blue-500 hover:bg-blue-700 text-xs text-gray-50 font-semibold py-2 px-4 rounded">
                                 Leer más...
                             </a>

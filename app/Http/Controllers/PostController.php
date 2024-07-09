@@ -13,4 +13,8 @@ class PostController extends Controller
         return response($image)
             ->header('Content-Type', 'image/jpeg');
     }
+
+    public function show( Post $post ) {
+        return view('posts.show', compact('post'));
+    }
 }

@@ -87,4 +87,10 @@ class Post extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+
+    // Route model binding
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

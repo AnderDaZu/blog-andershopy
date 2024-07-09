@@ -23,6 +23,8 @@ Route::get('posts/{post}/image', [PostController::class, 'image'])->name('posts.
 
 Route::post('images/upload', [ImageController::class, 'upload'])->name('images.upload');
 
+Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
 // borrar imagenes
 // Route::get('delete-images', function () {
 //     $files = Storage::files('images');

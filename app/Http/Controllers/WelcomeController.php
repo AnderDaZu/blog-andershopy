@@ -8,15 +8,16 @@ use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke()
     {
-        $order = 'desc';
-        $categories = [];
-
-        if( $request->order ) $order = ( $request->order == 'new' ) ? 'desc' : 'asc';
-
         $posts = Post::where('is_published', true)
-            ->orderBy('published_at', $order)
+            ->when(request('categories'), function($query){
+                $query->whereIn('category_id', request('categories'));
+            })
+            ->when(request('order') ?? 'new', function($query, $order){
+                $sort = $order === 'new' ? 'desc' : 'asc';
+                $query->orderBy('published_at', $sort);
+            })
             ->orderBy('id', 'desc')
             ->paginate(10);
 

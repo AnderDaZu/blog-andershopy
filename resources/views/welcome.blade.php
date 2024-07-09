@@ -17,8 +17,8 @@
                         <p class="text-base md:text-lg font-semibold mb-1">Ordenar:</p>
     
                         <select name="order" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-                            <option value="new">Más nuevos</option>
-                            <option value="old">Más antiguos</option>
+                            <option value="new" @selected( request('order') == 'new' )>Más nuevos</option>
+                            <option value="old" @selected( request('order') == 'old' )>Más antiguos</option>
                         </select>
                     </div>
 
@@ -27,7 +27,9 @@
         
                         @foreach ($categories as $category)
                             <label class="inline-flex items-center mt-1">
-                                <x-input type="checkbox" class="" name="categories[]" value="{{ $category->id }}" />
+                                <x-input type="checkbox" class="" name="categories[]" value="{{ $category->id }}" 
+                                    :checked="is_array(request('categories')) && in_array($category->id, request('categories'))"/>
+                                    {{-- :checked="in_array( $category->id, request('categories') ?? [])"/> --}}
                                 {{-- <input type="checkbox" name="categories[]" value="{{ $category->id }}"> --}}
                                 <span class="ml-2 text-gray-700">{{ $category->name }}</span>
                             </label>

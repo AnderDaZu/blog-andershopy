@@ -93,4 +93,22 @@ class Post extends Model
     {
         return 'slug';
     }
+
+    public function scopeFilter($query, $filters)
+    {
+        return $query->when($filters['categories'] ?? null, function ($query, $categories) {
+            $query->whereIn('category_id', $categories);
+        })
+        ->when($filters['order'] ?? 'new', function ($query, $order) {
+            $sort = $order === 'new' ? 'desc' : 'asc';
+            $query->orderBy('published_at', $sort);
+        })
+        ->when($filters['tag'] ?? null, function ($query, $tag) {
+            // se usa whereHas para agregar condición con x módelo relacionado, se emplea use ($variable) 
+            // para agregar al ambito de una sub función una variable que esta definida afuera
+            $query->whereHas('tags', function ($query) use ($tag) { 
+                $query->where('tags.name', $tag);
+            });
+        });
+    }
 }

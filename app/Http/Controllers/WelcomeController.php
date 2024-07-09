@@ -10,14 +10,10 @@ class WelcomeController extends Controller
 {
     public function __invoke()
     {
+        // return request()->all();
         $posts = Post::where('is_published', true)
-            ->when(request('categories'), function($query){
-                $query->whereIn('category_id', request('categories'));
-            })
-            ->when(request('order') ?? 'new', function($query, $order){
-                $sort = $order === 'new' ? 'desc' : 'asc';
-                $query->orderBy('published_at', $sort);
-            })
+            // los filtros que ejecuta filter() se definio en el módelo con el método scopeFilter
+            ->filter(request()->all())
             ->orderBy('id', 'desc')
             ->paginate(10);
 

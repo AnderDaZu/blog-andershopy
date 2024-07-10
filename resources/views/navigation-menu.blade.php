@@ -9,7 +9,12 @@
             'name' => 'Admin',
             'url' => route('admin.dashboard'),
             'active' => request()->routeIs('admin.dashboard')
-        ]
+        ],
+        [
+            'name' => 'Contacto',
+            'url' => route('contacts.index'),
+            'active' => request()->routeIs('contacts.*')
+        ],
     ]
 @endphp
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">

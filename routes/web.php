@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\WelcomeController;
@@ -24,6 +25,9 @@ Route::get('posts/{post}/image', [PostController::class, 'image'])->name('posts.
 Route::post('images/upload', [ImageController::class, 'upload'])->name('images.upload');
 
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+Route::get('contacts', [ContactController::class, 'index'])->name('contacts.index');
+Route::post('contacts', [ContactController::class, 'store'])->name('contacts.store');
 
 // borrar imagenes
 // Route::get('delete-images', function () {

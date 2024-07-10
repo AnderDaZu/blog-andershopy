@@ -27,6 +27,7 @@ Route::post('images/upload', [ImageController::class, 'upload'])->name('images.u
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
 
 Route::get('contacts', [ContactController::class, 'index'])->name('contacts.index');
+
 Route::post('contacts', [ContactController::class, 'store'])->name('contacts.store');
 
 // borrar imagenes

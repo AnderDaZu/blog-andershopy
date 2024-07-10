@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactMailable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -19,6 +21,8 @@ class ContactController extends Controller
             'message' => 'required|string|max:500',
         ]);
 
-        return redirect()->route('home')->with('success', 'Your message has been sent');
+        Mail::to('anderson9daza6@gmail.com')->send(new ContactMailable());
+
+        return 'Mensaje enviado';
     }
 }

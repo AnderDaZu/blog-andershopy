@@ -1,26 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+<x-mail::message>
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+# Hola Seller Andershopy
 
-    <!-- Styles -->
-    {{-- @livewireStyles --}}
-</head>
-<body>
-    
-    <h1 class="text-xl uppercase text-center font-semibold">Correo de prueba</h1>
+<x-mail::panel>
+{{ $data['message'] }}
+</x-mail::panel>
 
-    <p>Nombre: <span>{{ $data['name'] }}</span></p>
+**Correo de contacto:** *{{ $data['email'] }}*
 
-    <p>Email: <span>{{ $data['email'] }}</span></p>
+</x-mail::message>
+{{-- @component('mail::message')
 
-    <p>Mensaje: <span>{{ $data['message'] }}</span></p>
+# Hola Seller Andershopy
+{{ $data['name'] }} te ha enviado un mensaje desde la web de AnderShopy.
 
-</body>
-</html>
+@component('mail::panel')
+{{ $data['message'] }}
+@endcomponent
+
+Correo de contacto: `{{ $data['email'] }}`
+
+@endcomponent --}}

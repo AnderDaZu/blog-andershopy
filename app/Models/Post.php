@@ -111,4 +111,21 @@ class Post extends Model
             });
         });
     }
+
+    protected static function booted()
+    {
+        static::addGlobalScope('written', function ($query) { // uso de query scopes globales
+            if( request()->routeIs('admin.*') ) // validar si se realiza la petición desde área administrativa
+            {
+                $query->where('user_id', auth()->id());
+            }
+        });
+        
+        static::addGlobalScope('published', function ($query) { // uso de query scopes globales
+            if( !request()->routeIs('admin.*') ) // validar si se realiza la petición desde fuera del área administrativa
+            {
+                $query->where('is_published', true);
+            }
+        });
+    }   
 }

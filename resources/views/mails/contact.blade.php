@@ -16,5 +16,11 @@
     
     <h1 class="text-xl uppercase text-center font-semibold">Correo de prueba</h1>
 
+    <p>Nombre: <span>{{ $data['name'] }}</span></p>
+
+    <p>Email: <span>{{ $data['email'] }}</span></p>
+
+    <p>Mensaje: <span>{{ $data['message'] }}</span></p>
+
 </body>
 </html>

@@ -15,14 +15,16 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
-        // return $request->file;
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'message' => 'required|string|max:500',
         ]);
 
-        Mail::to('anderson9daza6@gmail.com')->send(new ContactMailable($request->all()));
+        $data['file'] = $request->file->store('contacts');
+
+        Mail::to('anderson9daza6@gmail.com')->send(new ContactMailable($data));
+        // Mail::to('anderson9daza6@gmail.com')->send(new ContactMailable($request->all()));
         // Mail::to('')->queue()
 
         session()->flash('swal', [

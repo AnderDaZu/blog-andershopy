@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 
 
-class ContactMailable extends Mailable
+class ContactMailable extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -62,9 +62,10 @@ class ContactMailable extends Mailable
     public function attachments(): array
     {
         return [
-            Attachment::fromPath($this->data['file']->getRealPath())
-                ->as($this->data['file']->getClientOriginalName())
-                ->withMime($this->data['file']->getMimeType()), // tipado
+            Attachment::fromStorage($this->data['file']), // desde procesos en cola queue
+            // Attachment::fromPath($this->data['file']->getRealPath()) // desde procesos sincronicos
+                // ->as($this->data['file']->getClientOriginalName())
+                // ->withMime($this->data['file']->getMimeType()), // tipado
         ];
     }
 }

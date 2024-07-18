@@ -21,11 +21,14 @@ class ContactController extends Controller
             'message' => 'required|string|max:500',
         ]);
 
-        $data['file'] = $request->file->store('contacts');
+        if( $request->hasFile('file') )
+        {
+            $data['file'] = $request->file->store('contacts');
+        }
+
 
         Mail::to('anderson9daza6@gmail.com')->send(new ContactMailable($data));
         // Mail::to('anderson9daza6@gmail.com')->send(new ContactMailable($request->all()));
-        // Mail::to('')->queue()
 
         session()->flash('swal', [
             'position' => "top-end",

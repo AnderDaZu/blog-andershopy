@@ -13,8 +13,8 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 
 
-// class ContactMailable extends Mailable
-class ContactMailable extends Mailable implements ShouldQueue // para trabajar con correos en cola
+class ContactMailable extends Mailable
+// class ContactMailable extends Mailable implements ShouldQueue // para trabajar con correos en cola
 {
     use Queueable, SerializesModels;
 
@@ -62,13 +62,18 @@ class ContactMailable extends Mailable implements ShouldQueue // para trabajar c
      */
     public function attachments(): array
     {
-        // return [
-        //     Attachment::fromStorage($this->data['file']), // desde procesos en cola queue
-        //     // Attachment::fromPath($this->data['file']->getRealPath()) // desde procesos sincronicos
-        //     // ->as($this->data['file']->getClientOriginalName())
-        //     // ->withMime($this->data['file']->getMimeType()), // tipado
-        // ];
+        if( isset($this->data['file']) )
+        {
+            return [
+                // Attachment::fromStorage($this->data['file']), // desde procesos en cola queue
+                Attachment::fromPath($this->data['file']->getRealPath()) // desde procesos sincronicos
+                    ->as($this->data['file']->getClientOriginalName())
+                    ->withMime($this->data['file']->getMimeType()), // tipado
+            ];
+        }
 
-        return isset($this->data['file']) ? [ Attachment::fromStorage($this->data['file']) ] : [];
+        return [];
+
+        // return isset($this->data['file']) ? [ Attachment::fromStorage($this->data['file']) ] : [];
     }
 }

@@ -27,8 +27,8 @@ class ContactController extends Controller
         }
 
 
-        Mail::to('anderson9daza6@gmail.com')->send(new ContactMailable($data));
-        // Mail::to('anderson9daza6@gmail.com')->send(new ContactMailable($request->all()));
+        // Mail::to('anderson9daza6@gmail.com')->send(new ContactMailable($data));
+        Mail::to($request->email)->send(new ContactMailable($request->all()));
 
         session()->flash('swal', [
             'position' => "top-end",

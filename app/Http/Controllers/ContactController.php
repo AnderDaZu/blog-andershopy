@@ -15,6 +15,7 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
+        // return $request->file;
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
@@ -34,6 +35,5 @@ class ContactController extends Controller
         ]);
 
         return back();
-        return 'Mensaje enviado';
     }
 }

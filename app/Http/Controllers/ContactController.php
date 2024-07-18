@@ -22,7 +22,18 @@ class ContactController extends Controller
         ]);
 
         Mail::to('anderson9daza6@gmail.com')->send(new ContactMailable($request->all()));
+        // Mail::to('')->queue()
 
+        session()->flash('swal', [
+            'position' => "top-end",
+            'icon' => "success",
+            'title' => "¡Gracias por contactarnos! el mensaje se envio correctamente 😉",
+            'showConfirmButton' => false,
+            'padding' => '1em',
+            'timer' => 3000
+        ]);
+
+        return back();
         return 'Mensaje enviado';
     }
 }

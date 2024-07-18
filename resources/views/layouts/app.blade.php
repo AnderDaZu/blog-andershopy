@@ -17,6 +17,9 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+        <!-- Sweet Alert 2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <!-- Styles -->
         @livewireStyles
     </head>
@@ -44,5 +47,13 @@
         @stack('modals')
 
         @livewireScripts
+
+        {{-- Para mostrar alertas --}}
+        @if (session('swal'))
+            <script>
+                Swal.fire(@json(session('swal')));
+            </script>
+        @endif
+
     </body>
 </html>
